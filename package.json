@@ -7,6 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "next lint",
     "lint:markup": "markuplint \"src/**/*.{html,jsx,tsx}\" --fix --problem-only",
     "check": "biome check --write ."
@@ -23,12 +25,19 @@
     "@markuplint/jsx-parser": "^4.7.19",
     "@markuplint/react-spec": "^4.5.19",
     "@pandacss/dev": "^0.53.3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
     "@tsconfig/strictest": "^2.0.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^3.1.1",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "markuplint": "^4.12.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.1"
   }
 }

@@ -1,3 +1,1 @@
-pnpm check
-pnpm tsc
-pnpm lint:markup
+pnpm dlx lint-staged

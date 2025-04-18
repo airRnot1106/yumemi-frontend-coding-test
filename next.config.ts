@@ -1,6 +1,11 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const nextConfig: NextConfig = withBundleAnalyzer({
   /* config options here */
   webpack(config) {
     // Grab the existing rule that handles SVG imports
@@ -30,6 +35,6 @@ const nextConfig: NextConfig = {
 
     return config;
   },
-};
+});
 
 export default nextConfig;

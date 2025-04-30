@@ -1,0 +1,1 @@
+import{j as o}from"./jsx-runtime-DoEZbXM1.js";import{G as r}from"./ghost-button-DmZE5ofc.js";import{N as n}from"./normal-button-Coi8qj4b.js";const s=t=>{switch(t.variant){case"ghost":return o.jsx(r,{...t});case"normal":return o.jsx(n,{...t});default:return t}};s.__docgenInfo={description:"",methods:[],displayName:"Button"};export{s as B};

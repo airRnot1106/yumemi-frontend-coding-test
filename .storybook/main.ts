@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/experimental-nextjs-vite';
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
@@ -22,6 +23,31 @@ const config: StorybookConfig = {
   staticDirs: ['../public'],
   viteFinal(config) {
     config.plugins?.push(tsconfigPaths());
+    config.plugins?.push(
+      svgr({
+        include: /\.svg$/,
+      }),
+    );
+    config.plugins = config.plugins?.flat().map((plugin) => {
+      if (
+        typeof plugin === 'object' &&
+        plugin !== null &&
+        'name' in plugin &&
+        plugin.name === 'vite-plugin-storybook-nextjs-image'
+      ) {
+        return {
+          ...plugin,
+          resolveId(id, importer) {
+            if (id.endsWith('.svg')) {
+              return null;
+            }
+            // @ts-expect-error `resolveId` hook of vite-plugin-storybook-nextjs-image is a function
+            return plugin.resolveId(id, importer);
+          },
+        };
+      }
+      return plugin;
+    });
     return config;
   },
 };

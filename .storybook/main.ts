@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '@storybook/experimental-addon-test',
     '@storybook/addon-a11y',
     '@storybook/addon-viewport',
+    '@storybook/addon-themes',
   ],
   framework: {
     name: '@storybook/experimental-nextjs-vite',

@@ -1,5 +1,8 @@
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
+import React from 'react';
 import '../src/app/globals.css';
+import { SiteThemeProvider } from '../src/features/site-theme/providers';
 
 const preview: Preview = {
   parameters: {
@@ -57,6 +60,28 @@ const preview: Preview = {
       defaultViewport: 'responsive',
     },
   },
+  decorators: [
+    withThemeByDataAttribute({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+      attributeName: 'data-theme',
+    }),
+    (Story) => (
+      <SiteThemeProvider>
+        <div
+          style={{
+            color: 'var(--colors-text)',
+            backgroundColor: 'var(--colors-base)',
+          }}
+        >
+          <Story />
+        </div>
+      </SiteThemeProvider>
+    ),
+  ],
 };
 
 export default preview;

@@ -1,90 +1,77 @@
-import Image from 'next/image';
+import { SearchParams } from 'nuqs/server';
+import { css } from 'styled-system/css';
+import { PopulationCompositionSelectbox } from '@/features/population-composition/components/atoms/population-composition-selectbox';
+import { PopulationCompositionArea } from '@/features/population-composition/components/molecules/population-composition-area';
+import { PopulationCompositionChart } from '@/features/population-composition/components/molecules/population-composition-chart';
+import { PopulationCompositionHeader } from '@/features/population-composition/components/molecules/population-composition-header';
+import { POPULATION_COMPOSITION_TYPE_OPTIONS } from '@/features/population-composition/consts';
+import { PrefectureForm } from '@/features/prefecture/components/molecules/prefecture-form';
+import { PrefectureSection } from '@/features/prefecture/components/molecules/prefecture-section';
+import { getPrefectures } from '@/features/prefecture/fetchers';
+import { SiteLayout } from '@/features/site/components/molecules/site-layout';
+import { matchResult } from '@/utils/result';
+import { rootSearchParamsCache } from './search-params';
 
-export default function Home() {
+type PageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+export default async function Home({ searchParams }: PageProps) {
+  const { prefCodes, type } = await rootSearchParamsCache.parse(searchParams);
+  const prefectures = matchResult(
+    await getPrefectures(),
+    ({ result }) =>
+      result.filter(({ prefCode }) => (prefCodes ?? []).includes(prefCode)),
+    ({ error }) => {
+      throw error;
+    },
+  );
+
+  const populationCompositionType =
+    POPULATION_COMPOSITION_TYPE_OPTIONS.find(({ value }) => value === type) ??
+    POPULATION_COMPOSITION_TYPE_OPTIONS[0];
+
   return (
-    <div>
-      <main>
-        <Image
-          alt="Next.js logo"
-          height={38}
-          priority
-          src="/next.svg"
-          width={180}
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div>
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Image
-              alt="Vercel logomark"
-              height={20}
-              src="/vercel.svg"
-              width={20}
+    <SiteLayout>
+      <main
+        className={css({
+          display: 'grid',
+          gridAutoFlow: 'row',
+          rowGap: '2rem',
+          paddingBlock: '1rem',
+          paddingInline: '2rem',
+        })}
+      >
+        <PrefectureSection
+          prefectureForm={
+            <PrefectureForm
+              defaultValues={prefectures.map(({ prefCode }) => prefCode)}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Read our docs
-          </a>
-        </div>
+          }
+        />
+        <PopulationCompositionArea
+          chart={
+            <PopulationCompositionChart
+              className={css({
+                width: '90dvw',
+                height: '80dvh',
+                marginInline: 'auto',
+              })}
+              prefectures={prefectures}
+              type={populationCompositionType}
+            />
+          }
+          header={
+            <PopulationCompositionHeader
+              populationCompositionSelectbox={
+                <PopulationCompositionSelectbox
+                  defaultValue={populationCompositionType.value}
+                />
+              }
+            />
+          }
+        />
       </main>
-      <footer>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Image
-            alt="File icon"
-            aria-hidden
-            height={16}
-            src="/file.svg"
-            width={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Image
-            alt="Window icon"
-            aria-hidden
-            height={16}
-            src="/window.svg"
-            width={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Image
-            alt="Globe icon"
-            aria-hidden
-            height={16}
-            src="/globe.svg"
-            width={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </SiteLayout>
   );
 }

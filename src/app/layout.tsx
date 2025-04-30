@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { css } from 'styled-system/css';
 import { SiteThemeProvider } from '@/features/site-theme/providers';
 
 const geistSans = Geist({
@@ -26,7 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${css({
+          color: 'text',
+          backgroundColor: 'base',
+        })}`}
+      >
         <NuqsAdapter>
           <SiteThemeProvider>{children}</SiteThemeProvider>
         </NuqsAdapter>

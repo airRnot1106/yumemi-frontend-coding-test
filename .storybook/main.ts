@@ -50,5 +50,10 @@ const config: StorybookConfig = {
     });
     return config;
   },
+  env: (config) => ({
+    ...config,
+    API_BASE_URL: '',
+    API_KEY: '',
+  }),
 };
 export default config;

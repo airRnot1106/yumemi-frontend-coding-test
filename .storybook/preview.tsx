@@ -2,6 +2,7 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
 import React from 'react';
 import '../src/app/globals.css';
+import { NuqsTestingAdapter } from 'nuqs/adapters/testing';
 import { SiteThemeProvider } from '../src/features/site-theme/providers';
 
 const preview: Preview = {
@@ -69,6 +70,14 @@ const preview: Preview = {
       defaultTheme: 'light',
       attributeName: 'data-theme',
     }),
+    (Story, { parameters }) => {
+      const { nuqs } = parameters;
+      return (
+        <NuqsTestingAdapter searchParams={nuqs?.searchParams}>
+          <Story />
+        </NuqsTestingAdapter>
+      );
+    },
     (Story) => (
       <SiteThemeProvider>
         <div

@@ -51,21 +51,33 @@ export default async function Home({ searchParams }: PageProps) {
         />
         <PopulationCompositionArea
           chart={
-            <div
-              className={css({
-                overflow: 'auto',
-              })}
-            >
-              <PopulationCompositionChart
+            prefectures.length > 0 ? (
+              <div
                 className={css({
-                  width: 'max(90dvw, 1024px)',
-                  height: '80dvh',
-                  marginInline: 'auto',
+                  overflow: 'auto',
                 })}
-                prefectures={prefectures}
-                type={populationCompositionType}
-              />
-            </div>
+              >
+                <PopulationCompositionChart
+                  className={css({
+                    width: 'max(90dvw, 1024px)',
+                    height: '80dvh',
+                    marginInline: 'auto',
+                  })}
+                  prefectures={prefectures}
+                  type={populationCompositionType}
+                />
+              </div>
+            ) : (
+              <div
+                className={css({
+                  display: 'grid',
+                  placeContent: 'center',
+                  paddingBlock: '6rem',
+                })}
+              >
+                <span>都道府県を選択してください</span>
+              </div>
+            )
           }
           header={
             <PopulationCompositionHeader

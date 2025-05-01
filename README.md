@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+このリポジトリは、株式会社ゆめみの[フロントエンドコーディング試験](https://yumemi.notion.site/0e9ef27b55704d7882aab55cc86c999d)の実装です。
 
-## Getting Started
+## 技術スタック
 
-First, run the development server:
+- フレームワーク: Next.js 15(App Router)
+- 言語: TypeScript
+- パッケージマネージャ: pnpm
+- スタイリング: Panda CSS
+- テスト: Vitest
+- UIカタログ: Storybook
+- リンター/フォーマッタ: Biome / Markuplint
+- CI/CD: GitHub Actions / Vercel
+- 開発環境構築: nix-direnv
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ライブラリ
+
+- チャート: recharts
+- クエリパラメータ管理: nuqs
+- アイコン: lucide-react
+- フォーム: @tanstack/react-form
+- スキーマ: zod
+
+## ディレクトリ構成
+
+```
+src
+├ app
+├ assets
+│ └ svg
+├ components
+├ features
+├ libs
+│ └ api
+└ utils
+　 ├ panic-helper
+　 └ result
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+特定の関心に依存しない汎用的なコンポーネントを管理します。
+ディレクトリ構成は[BCD Design](https://qiita.com/misuken/items/19f9f603ab165e228fe1)と[共通部分をスマートに管理するディレクトリ構造](https://zenn.dev/misuken/articles/bf746c4cf3bdc8)をもとにしたものを採用しています。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### features
 
-## Learn More
+関心に依存する要素をpackage by featureで管理します。
+`features/*/components/`は、前述の`components`ディレクトリと同じディレクトリ構成になります。
 
-To learn more about Next.js, take a look at the following resources:
+### libs/api
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[ゆめみフロントエンドコーディング試験 API](https://yumemi-frontend-engineer-codecheck-api.vercel.app/api-doc)に関するユーティリティを管理します。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### utils
 
-## Deploy on Vercel
+その他ユーティリティを管理します。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `panic-helper`: アサーションユーティリティ
+- `result`: Result型
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 開発環境のセットアップ
+
+1. リポジトリのクローン
+
+```bash
+git clone https://github.com/airRnot1106/yumemi-frontend-coding-test.git
+cd yumemi-frontend-coding-test
+```
+
+Nixが使用できる環境ならば、nix-direnvによってNode.jsとpnpmが使用できるシェル環境を自動で構築できます。
+
+2. 依存関係のインストール
+
+```bash
+pnpm install
+```
+
+3. 環境変数の設定
+
+[ゆめみフロントエンドコーディング試験 API](https://yumemi-frontend-engineer-codecheck-api.vercel.app/api-doc)に記載されている値を`.env.local.sample`を参考に設定してください。
+
+4. 開発サーバーの起動
+
+```bash
+pnpm dev
+```
+
+## LICENSE
+
+MIT

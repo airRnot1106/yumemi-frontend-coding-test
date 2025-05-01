@@ -51,15 +51,21 @@ export default async function Home({ searchParams }: PageProps) {
         />
         <PopulationCompositionArea
           chart={
-            <PopulationCompositionChart
+            <div
               className={css({
-                width: '90dvw',
-                height: '80dvh',
-                marginInline: 'auto',
+                overflow: 'auto',
               })}
-              prefectures={prefectures}
-              type={populationCompositionType}
-            />
+            >
+              <PopulationCompositionChart
+                className={css({
+                  width: 'max(90dvw, 1024px)',
+                  height: '80dvh',
+                  marginInline: 'auto',
+                })}
+                prefectures={prefectures}
+                type={populationCompositionType}
+              />
+            </div>
           }
           header={
             <PopulationCompositionHeader

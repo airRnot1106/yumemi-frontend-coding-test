@@ -72,7 +72,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 }`,signature:{properties:[{key:"label",value:{name:"string",required:!0}},{key:"value",value:{name:"string",required:!0}}]}},description:""},populationCompositions:{required:!0,tsType:{name:"Array",elements:[{name:"signature",type:"object",raw:`{
   prefecture: Prefecture;
   data: PopulationComposition['data'];
-}`,signature:{properties:[{key:"prefecture",value:{name:"z.infer",elements:[{name:"prefectureSchema"}],raw:"z.infer<typeof prefectureSchema>",required:!0}},{key:"data",value:{name:"z.infer['data']",raw:"PopulationComposition['data']",required:!0}}]}}],raw:`{
+}`,signature:{properties:[{key:"prefecture",value:{name:"Prefecture",required:!0}},{key:"data",value:{name:"PopulationComposition['data']",raw:"PopulationComposition['data']",required:!0}}]}}],raw:`{
   prefecture: Prefecture;
   data: PopulationComposition['data'];
 }[]`},description:""}}};export{uR as P,vR as d};
